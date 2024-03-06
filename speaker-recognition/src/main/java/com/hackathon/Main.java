@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE.md file in the project root for full license information.
 //
-package speechsdk.quickstart;
+package com.hackathon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ public class Main {
 
     public static void identifySpeakers(SpeechConfig speechConfig, List<VoiceProfile> profiles, String audioFile) throws Exception {
         try (SpeakerIdentificationModel model = SpeakerIdentificationModel.fromProfiles(profiles);
-            AudioConfig audioConfig = AudioConfig.fromWavFileInput(audioFile)) {
+             AudioConfig audioConfig = AudioConfig.fromWavFileInput(audioFile)) {
             assert(audioConfig != null);
             assert(model != null);
             // Creates an instance of a speaker recognizer using speech configuration with specified
@@ -59,7 +59,7 @@ public class Main {
     }
     public static void verifySpeaker(SpeechConfig speechConfig, VoiceProfile profile, String audioFile) throws Exception {
         try (SpeakerVerificationModel model = SpeakerVerificationModel.fromProfile(profile);
-            AudioConfig audioConfig = AudioConfig.fromWavFileInput(audioFile)) {
+             AudioConfig audioConfig = AudioConfig.fromWavFileInput(audioFile)) {
 
             assert(audioConfig != null);
             assert(model != null);
@@ -100,10 +100,10 @@ public class Main {
             assert(client != null);
             int exitCode = 1;
             try (VoiceProfile profile1 = client.createProfileAsync(VoiceProfileType.TextIndependentIdentification, "en-us").get();
-                VoiceProfile profile2 = client.createProfileAsync(VoiceProfileType.TextIndependentIdentification, "en-us").get()) {
+                 VoiceProfile profile2 = client.createProfileAsync(VoiceProfileType.TextIndependentIdentification, "en-us").get()) {
                 assert(profile1 != null);
                 assert(profile2 != null);
-            
+
                 if(enrollProfile(client, profile1, audioFile1) && enrollProfile(client, profile2, audioFile2)) {
                     System.out.println(String.format("Enrolled profiles %s and %s for text independent identification", profile1.getId(), profile2.getId()));
                     List<VoiceProfile> profiles = new ArrayList<>();
@@ -113,7 +113,7 @@ public class Main {
                     identifySpeakers(speechConfig, profiles, identificationFile);
                 }
                 try (VoiceProfileResult result1 = client.deleteProfileAsync(profile1).get();
-                    VoiceProfileResult result2 = client.deleteProfileAsync(profile2).get()) {
+                     VoiceProfileResult result2 = client.deleteProfileAsync(profile2).get()) {
                     assert(result1.getReason() == ResultReason.DeletedVoiceProfile);
                     assert(result2.getReason() == ResultReason.DeletedVoiceProfile);
                 }
@@ -142,7 +142,7 @@ public class Main {
 
             assert(speechConfig != null);
             assert(client != null);
-            
+
             try (VoiceProfile profile = client.createProfileAsync(VoiceProfileType.TextIndependentVerification, "en-us").get()) {
                 assert(VoiceProfileType.TextIndependentVerification == profile.getType());
                 assert(profile != null);
